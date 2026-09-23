@@ -3,12 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wi-Fi Gratis - Publicidad</title>
+    <title>Wi-Fi Gratis</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .container { max-width: 450px; background: white; padding: 20px; margin: 50px auto; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        img { width: 100%; max-height: 400px; object-fit: contain; border-radius: 6px; margin-bottom: 20px; }
-        input[type="submit"], button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; text-align: center; background-color: #f0f2f5; margin: 0; padding: 15px; }
+        .box { max-width: 400px; background: white; padding: 20px; margin: 30px auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h2 { font-size: 20px; color: #333; margin-top: 0; }
+        p { font-size: 14px; color: #666; }
+        /* La imagen de GitHub cargará directamente en HTML */
+        .ad-img { width: 100%; max-height: 380px; object-fit: contain; border-radius: 8px; margin-bottom: 20px; }
+        .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; transition: 0.3s; }
     </style>
 </head>
 <body>
+
+<div class="box">
+    <h2>Conexión a Wi-Fi Gratis</h2>
+    <p>Por favor espera 15 segundos viendo nuestro anuncio.</p>
+    
+    <!-- IMAGEN DIRECTA: Muestra tu primera foto de prueba -->
+    <img class="ad-img" src="https://githubusercontent.com" alt="Anuncio">
+
+    <!-- Formulario obligatorio de Omada para dar acceso -->
+    <form id="omadaForm" method="post">
+        <input type="submit" id="submitBtn" class="btn" value="Espera... (15s)">
+    </form>
+</div>
+
+<script>
+    // 1. OBTENER PARÁMETROS OCULTOS DE TU RED OMADA
+    const params = new URLSearchParams(window.location.search);
+    const submitUrl = params.get('target') || 'https://omadanetworks.com';
+    document.getElementById('omadaForm').action = submitUrl;
+
+    // 2. CONTADOR REGRESIVO DE 15 SEGUNDOS
+    const boton = document.getElementById('submitBtn');
+    boton.disabled = true;
+    boton.style.opacity = "0.5";
+
+    let cuenta = 15;
+    const reloj = setInterval(function() {
+        cuenta--;
+        boton.value = "Espera... (" + cuenta + "s)";
+        
+        if (cuenta <= 0) {
+            clearInterval(reloj);
+            boton.disabled = false;
+            boton.style.opacity = "1";
+            boton.value = "Obtener Internet Gratis";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
