@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wi-Fi Gratis</title>
+    <title>Conexión Wi-Fi Gratis</title>
     <style>
         * { box-sizing: border-box; }
         html, body { height: 100%; margin: 0; padding: 0; background-color: #f0f2f5; font-family: -apple-system, sans-serif; overflow: hidden; }
@@ -24,11 +24,11 @@
         <p>Tu internet se activará al finalizar la cuenta regresiva.</p>
         
         <div class="ad-container">
-            <!-- Cargará tus imágenes de forma aleatoria usando rutas cortas -->
+            <!-- Forzamos la URL larga absoluta para que Windows la renderice sin errores -->
             <img id="publicidad" class="ad-img" src="" alt="Anuncio">
         </div>
 
-        <!-- Formulario con botón visible que cumple con las reglas de Android y Laptop -->
+        <!-- Botón interactivo nativo -->
         <form id="omadaForm" method="post" style="width: 100%;">
             <input type="submit" id="accionBtn" class="btn" value="Espera... (15s)">
         </form>
@@ -36,18 +36,18 @@
 </div>
 
 <script>
-    // Tu lista oficial de imágenes en GitHub
+    // LISTA OFICIAL CON ENLACES ABSOLUTOS (Solución para Windows Laptop)
     const misImagenes = [
-        "agxpub.jpg",
-        "agxpub2.jpg",
-        "agxpub3.jpg"
+        "https://neyo1982.github.io/publicidad/agxpub.jpg",
+        "https://neyo1982.github.io/publicidad/agxpub2.jpg",
+        "https://neyo1982.github.io/publicidad/agxpub3.jpg"
     ];
 
     // Carga de la foto al azar de inmediato al abrir la página web
     const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
     document.getElementById('publicidad').src = imagenAleatoria;
 
-    // Rescatamos los parámetros de autenticación que Omada envía de forma invisible por la URL
+    // Rescatamos los parámetros de autenticación que Omada envía por la URL
     const params = new URLSearchParams(window.location.search);
     const submitUrl = params.get('target') || 'https://omadanetworks.com';
     document.getElementById('omadaForm').action = submitUrl;
