@@ -24,11 +24,9 @@
         <p>Por seguridad, tu navegación se activará al terminar el tiempo.</p>
         
         <div class="ad-container">
-            <!-- La imagen se inyectará de forma forzada por Javascript de tu servidor -->
             <img id="publicidad" class="ad-img" src="" alt="Anuncio All Gamex">
         </div>
 
-        <!-- Formulario estándar con botón físico nativo visible para Android y Windows -->
         <form id="omadaForm" method="post" style="width: 100%;">
             <input type="button" id="accionBtn" class="btn" value="Espera... (15s)">
             <input type="submit" id="submitReal" style="display: none;">
@@ -37,24 +35,18 @@
 </div>
 
 <script>
-    // LISTA DE IMÁGENES COMPLETA CON PROTOCOLO SEGURO Y EXTENSIÓN LIMPIA
+    // LISTA DE IMÁGENES APUNTANDO A LA CARPETA ASSETS DE TU WEB DE GITHUB
     const misImagenes = [
-        "https://neyo1982.github.io/publicidad/agxpub.jpg",
-        "https://neyo1982.github.io/publicidad/agxpub2.jpg",
-        "https://neyo1982.github.io/publicidad/agxpub3.jpg"
+        "https://github.io",
+        "https://github.io",
+        "https://github.io"
     ];
 
-    // Selección e inyección inmediata de la imagen de All Gamex
+    // Selección aleatoria
     const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
-    const imgObj = document.getElementById('publicidad');
-    imgObj.src = imagenAleatoria;
+    document.getElementById('publicidad').src = imagenAleatoria;
 
-    // Forzar la recarga visual si el navegador del portal cautivo la bloquea al inicio
-    imgObj.onerror = function() {
-        this.src = imagenAleatoria + "?t=" + new Date().getTime();
-    };
-
-    // Extraer parámetros obligatorios que envía Omada por URL
+    // Extraer parámetros que envía Omada por URL
     const urlParams = new URLSearchParams(window.location.search);
     const targetUrl = urlParams.get('target') || 'https://omadanetworks.com';
     document.getElementById('omadaForm').action = targetUrl;
@@ -79,7 +71,6 @@
             boton.style.cursor = "pointer";
             boton.value = "Conectarse a Internet Gratis";
             
-            // Cuando el usuario de Android o Windows presione el botón activo, se procesa el formulario nativo
             boton.onclick = function() {
                 document.getElementById('submitReal').click();
             };
