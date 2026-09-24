@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Conexión Wi-Fi Gratis</title>
+    <title>Acceso Wi-Fi All Gamex</title>
     <style>
         * { box-sizing: border-box; }
         html, body { height: 100%; margin: 0; padding: 0; background-color: #f0f2f5; font-family: -apple-system, sans-serif; overflow: hidden; }
@@ -13,64 +13,76 @@
         p { font-size: 13px; color: #666; margin: 0 0 15px 0; text-align: center; }
         .ad-container { width: 100%; flex: 1; display: flex; justify-content: center; align-items: center; min-height: 0; margin-bottom: 15px; }
         .ad-img { max-width: 100%; max-height: 45vh; object-fit: contain; border-radius: 8px; }
-        .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; }
+        .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; width: 100%; display: block; -webkit-appearance: none; }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
     <div class="box">
-        <h2>Acceso a Wi-Fi Gratis</h2>
-        <p>Tu internet se activará al finalizar la cuenta regresiva.</p>
+        <h2>Wi-Fi Gratis All Gamex</h2>
+        <p>Por seguridad, tu navegación se activará al terminar el tiempo.</p>
         
         <div class="ad-container">
-            <!-- Forzamos la URL larga absoluta para que Windows la renderice sin errores -->
-            <img id="publicidad" class="ad-img" src="" alt="Anuncio">
+            <!-- La imagen se inyectará de forma forzada por Javascript de tu servidor -->
+            <img id="publicidad" class="ad-img" src="" alt="Anuncio All Gamex">
         </div>
 
-        <!-- Botón interactivo nativo -->
+        <!-- Formulario estándar con botón físico nativo visible para Android y Windows -->
         <form id="omadaForm" method="post" style="width: 100%;">
-            <input type="submit" id="accionBtn" class="btn" value="Espera... (15s)">
+            <input type="button" id="accionBtn" class="btn" value="Espera... (15s)">
+            <input type="submit" id="submitReal" style="display: none;">
         </form>
     </div>
 </div>
 
 <script>
-    // LISTA OFICIAL CON ENLACES ABSOLUTOS (Solución para Windows Laptop)
+    // LISTA DE IMÁGENES COMPLETA CON PROTOCOLO SEGURO Y EXTENSIÓN LIMPIA
     const misImagenes = [
         "https://neyo1982.github.io/publicidad/agxpub.jpg",
         "https://neyo1982.github.io/publicidad/agxpub2.jpg",
         "https://neyo1982.github.io/publicidad/agxpub3.jpg"
     ];
 
-    // Carga de la foto al azar de inmediato al abrir la página web
+    // Selección e inyección inmediata de la imagen de All Gamex
     const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
-    document.getElementById('publicidad').src = imagenAleatoria;
+    const imgObj = document.getElementById('publicidad');
+    imgObj.src = imagenAleatoria;
 
-    // Rescatamos los parámetros de autenticación que Omada envía por la URL
-    const params = new URLSearchParams(window.location.search);
-    const submitUrl = params.get('target') || 'https://omadanetworks.com';
-    document.getElementById('omadaForm').action = submitUrl;
+    // Forzar la recarga visual si el navegador del portal cautivo la bloquea al inicio
+    imgObj.onerror = function() {
+        this.src = imagenAleatoria + "?t=" + new Date().getTime();
+    };
 
-    // CONTROL DE LA CUENTA REGRESIVA DEL BOTÓN
+    // Extraer parámetros obligatorios que envía Omada por URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetUrl = urlParams.get('target') || 'https://omadanetworks.com';
+    document.getElementById('omadaForm').action = targetUrl;
+
+    // PROGRAMACIÓN DEL TEMPORIZADOR DEL BOTÓN
     const boton = document.getElementById('accionBtn');
     boton.disabled = true;
     boton.style.backgroundColor = "#e2e8f0";
     boton.style.color = "#4a5568";
     boton.style.cursor = "not-allowed";
 
-    let cuenta = 15;
-    const reloj = setInterval(function() {
-        cuenta--;
-        boton.value = "Espera... (" + cuenta + "s)";
+    let tiempo = 15;
+    const cuentaRegresiva = setInterval(function() {
+        tiempo--;
+        boton.value = "Espera... (" + tiempo + "s)";
         
-        if (cuenta <= 0) {
-            clearInterval(reloj);
+        if (tiempo <= 0) {
+            clearInterval(cuentaRegresiva);
             boton.disabled = false;
             boton.style.backgroundColor = "#28a745";
             boton.style.color = "white";
             boton.style.cursor = "pointer";
-            boton.value = "Obtener Internet Gratis";
+            boton.value = "Conectarse a Internet Gratis";
+            
+            // Cuando el usuario de Android o Windows presione el botón activo, se procesa el formulario nativo
+            boton.onclick = function() {
+                document.getElementById('submitReal').click();
+            };
         }
     }, 1000);
 </script>
