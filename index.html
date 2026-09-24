@@ -12,7 +12,7 @@
         h2 { font-size: 18px; color: #333; margin: 0 0 5px 0; text-align: center; }
         p { font-size: 13px; color: #666; margin: 0 0 15px 0; text-align: center; }
         .ad-container { width: 100%; flex: 1; display: flex; justify-content: center; align-items: center; min-height: 0; margin-bottom: 15px; }
-        .ad-img { max-width: 100%; max-height: 45vh; object-fit: contain; border-radius: 8px; display: none; } /* Oculta al inicio */
+        .ad-img { max-width: 100%; max-height: 45vh; object-fit: contain; border-radius: 8px; }
         .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; }
     </style>
 </head>
@@ -21,71 +21,58 @@
 <div class="wrapper">
     <div class="box">
         <h2>Acceso a Wi-Fi Gratis</h2>
-        <p id="subtitulo">Presiona el botón para activar tu navegación.</p>
+        <p>Tu internet se activará al finalizar la cuenta regresiva.</p>
         
         <div class="ad-container">
-            <!-- Espacio listo para tus imágenes -->
+            <!-- Cargará tus imágenes de forma aleatoria usando rutas cortas -->
             <img id="publicidad" class="ad-img" src="" alt="Anuncio">
         </div>
 
-        <!-- Este botón iniciará el flujo en todos los equipos -->
-        <button id="accionBtn" class="btn" onclick="iniciarAnuncio()">Ver Anuncio (15s)</button>
-
-        <!-- Formulario oculto que Omada necesita para liberar el internet -->
-        <form id="omadaForm" method="post" style="display:none;">
-            <input type="submit" id="submitReal">
+        <!-- Formulario con botón visible que cumple con las reglas de Android y Laptop -->
+        <form id="omadaForm" method="post" style="width: 100%;">
+            <input type="submit" id="accionBtn" class="btn" value="Espera... (15s)">
         </form>
     </div>
 </div>
 
 <script>
-    // LISTA DE TUS IMÁGENES (Añade las 30 repitiendo este formato corto)
+    // Tu lista oficial de imágenes en GitHub
     const misImagenes = [
         "agxpub.jpg",
         "agxpub2.jpg",
         "agxpub3.jpg"
     ];
 
-    // Rescatamos los datos de conexión que envía Omada por la URL
+    // Carga de la foto al azar de inmediato al abrir la página web
+    const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
+    document.getElementById('publicidad').src = imagenAleatoria;
+
+    // Rescatamos los parámetros de autenticación que Omada envía de forma invisible por la URL
     const params = new URLSearchParams(window.location.search);
     const submitUrl = params.get('target') || 'https://omadanetworks.com';
     document.getElementById('omadaForm').action = submitUrl;
 
-    function iniciarAnuncio() {
-        // 1. Mostrar la imagen publicitaria al azar
-        const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
-        const foto = document.getElementById('publicidad');
-        foto.src = imagenAleatoria;
-        foto.style.display = "block";
+    // CONTROL DE LA CUENTA REGRESIVA DEL BOTÓN
+    const boton = document.getElementById('accionBtn');
+    boton.disabled = true;
+    boton.style.backgroundColor = "#e2e8f0";
+    boton.style.color = "#4a5568";
+    boton.style.cursor = "not-allowed";
 
-        // 2. Modificar textos del portal
-        document.getElementById('subtitulo').innerText = "Cargando acceso a internet gratis...";
+    let cuenta = 15;
+    const reloj = setInterval(function() {
+        cuenta--;
+        boton.value = "Espera... (" + cuenta + "s)";
         
-        // 3. Congelar el botón e iniciar el contador
-        const boton = document.getElementById('accionBtn');
-        boton.disabled = true;
-        boton.style.backgroundColor = "#e2e8f0";
-        boton.style.color = "#4a5568";
-        boton.style.cursor = "not-allowed";
-
-        let cuenta = 15;
-        boton.innerText = "Espera... (" + cuenta + "s)";
-
-        const reloj = setInterval(function() {
-            cuenta--;
-            boton.innerText = "Espera... (" + cuenta + "s)";
-            
-            if (cuenta <= 0) {
-                clearInterval(reloj);
-                boton.innerText = "¡Conectando al Wi-Fi!";
-                boton.style.backgroundColor = "#28a745";
-                boton.style.color = "white";
-                
-                // Hace el envío del formulario físico a Omada para darle internet real al usuario
-                document.getElementById('submitReal').click();
-            }
-        }, 1000);
-    }
+        if (cuenta <= 0) {
+            clearInterval(reloj);
+            boton.disabled = false;
+            boton.style.backgroundColor = "#28a745";
+            boton.style.color = "white";
+            boton.style.cursor = "pointer";
+            boton.value = "Obtener Internet Gratis";
+        }
+    }, 1000);
 </script>
 
 </body>
