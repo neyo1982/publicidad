@@ -2,63 +2,116 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Gracias por conectarte!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wi-Fi Gratis</title>
     <style>
-        body { font-family: -apple-system, sans-serif; text-align: center; background-color: #f0f2f5; margin: 0; padding: 20px; }
-        .box { max-width: 420px; background: white; padding: 25px; margin: 40px auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        h2 { color: #333; margin-top: 0; font-size: 22px; }
-        p { color: #666; font-size: 15px; }
-        .ad-img { 
+        * { box-sizing: border-box; }
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f0f2f5; 
+            font-family: -apple-system, sans-serif;
+            overflow: hidden; /* Evita físicamente que la pantalla haga cualquier tipo de scroll */
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 15px;
+        }
+        .box { 
             width: 100%; 
-            max-width: 100%;
-            height: auto; 
-            max-height: 50vh; /* Esto limita la imagen a ocupar máximo la mitad de la pantalla del celular */
+            max-width: 380px; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-height: 90vh; /* Obliga a la caja a ocupar máximo el 90% de la pantalla */
+        }
+        h2 { font-size: 18px; color: #333; margin: 0 0 5px 0; text-align: center; }
+        p { font-size: 13px; color: #666; margin: 0 0 15px 0; text-align: center; }
+        
+        /* CONTROL SEVERO DE LA IMAGEN */
+        .ad-container {
+            width: 100%;
+            flex: 1; /* Hace que el contenedor de la foto use el espacio disponible */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 0; /* Corrección crítica para navegadores móviles */
+            margin-bottom: 15px;
+        }
+        .ad-img { 
+            max-width: 100%; 
+            max-height: 45vh; /* Ajuste estricto: la foto nunca medirá más del 45% del alto del celular */
             object-fit: contain; 
             border-radius: 8px; 
-            margin: 15px 0; 
         }
-        .timer { font-weight: bold; color: #007aff; font-size: 16px; }
+        
+        .timer { 
+            width: 100%;
+            padding: 12px; 
+            background-color: #e2e8f0; 
+            color: #4a5568; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-weight: bold; 
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <h2>¡Ya estás conectado al Wi-Fi!</h2>
-    <p>Disfruta de tu internet gratis. Accediendo a la red en...</p>
-    
-    <!-- Imagen directa de tu publicidad -->
-    <img id="publicidad" src="" alt="Anuncio">
+<div class="wrapper">
+    <div class="box">
+        <h2>¡Conexión Exitosa!</h2>
+        <p>Disfruta de internet gratis en unos segundos...</p>
+        
+        <div class="ad-container">
+            <img id="publicidad" class="ad-img" src="" alt="Anuncio">
+        </div>
 
-    <div class="timer" id="contador">Espera 15 segundos...</div>
+        <div class="timer" id="contador">Espera 15 segundos...</div>
+    </div>
 </div>
 
 <script>
- // 1. TUS 30 IMÁGENES DE GITHUB (Enlaces corregidos y listos para usar)
+    // 1. TUS IMÁGENES (Agrega más hacia abajo repitiendo el formato con comas)
     const misImagenes = [
         "agxpub.jpg",
         "agxpub2.jpg",
-        "agxpub3.jpg"
-        // Para agregar las 30 imágenes, solo pon una coma al final de la línea anterior,
-        // presionas Enter, y pegas el enlace de tu nueva foto respetando las comillas.
+        "agx3pub.jpg"
     ];
 
-    // Carga la foto al azar
+    // Carga de imagen aleatoria
     const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
     document.getElementById('publicidad').src = imagenAleatoria;
 
-    // 2. TEMPORIZADOR DE 15 SEGUNDOS ANTES DE MANDARLOS A GOOGLE
+    // 2. CONTADOR Y REDIRECCIÓN AUTOMÁTICA
     let tiempo = 15;
     const elementoContador = document.getElementById('contador');
     
+    const params = new URLSearchParams(window.location.search);
+    const submitUrl = params.get('target') || 'https://omadanetworks.com';
+
     const reloj = setInterval(function() {
         tiempo--;
-        elementoContador.innerText = "Abriendo navegador en " + tiempo + " segundos...";
+        elementoContador.innerText = "Habilitando navegación en " + tiempo + "s...";
         
         if (tiempo <= 0) {
             clearInterval(reloj);
-            // Al terminar los 15 segundos, los mandas a tu web o a Google para que naveguen libres
-            window.location.href = "https://google.com";
+            elementoContador.innerText = "¡Conectado!";
+            elementoContador.style.backgroundColor = "#28a745";
+            elementoContador.style.color = "white";
+            
+            // Redirección invisible automática a donde el usuario quería ir
+            window.location.href = submitUrl;
         }
     }, 1000);
 </script>
