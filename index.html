@@ -13,7 +13,7 @@
         p { font-size: 13px; color: #666; margin: 0 0 15px 0; text-align: center; }
         .ad-container { width: 100%; flex: 1; display: flex; justify-content: center; align-items: center; min-height: 0; margin-bottom: 15px; }
         .ad-img { max-width: 100%; max-height: 45vh; object-fit: contain; border-radius: 8px; }
-        .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; width: 100%; display: block; -webkit-appearance: none; }
+        .btn { width: 100%; padding: 14px; background-color: #e2e8f0; color: #4a5568; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: not-allowed; text-align: center; width: 100%; display: block; -webkit-appearance: none; }
     </style>
 </head>
 <body>
@@ -28,54 +28,66 @@
         </div>
 
         <form id="omadaForm" method="post" style="width: 100%;">
-            <input type="button" id="accionBtn" class="btn" value="Espera... (15s)">
-            <input type="submit" id="submitReal" style="display: none;">
+            <!-- Inputs ocultos requeridos por la controladora de Omada para validar el paso -->
+            <input type="hidden" id="clientMac" name="clientMac" value="">
+            <input type="hidden" id="apMac" name="apMac" value="">
+            
+            <input type="button" id="accionBtn" class="btn" value="Espera... (15s)" disabled>
         </form>
     </div>
 </div>
 
 <script>
-    // LISTA DE IMÁGENES APUNTANDO A LA CARPETA ASSETS DE TU WEB DE GITHUB
+    // LISTA DE IMÁGENES APUNTANDO A TU WEB DE GITHUB
     const misImagenes = [
-        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
-        "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
-        "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
+        "https://github.io",
+        "https://github.io",
+        "https://github.io"
     ];
 
-    // Selección aleatoria
+    // Selección aleatoria inmediata de la imagen
     const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
     document.getElementById('publicidad').src = imagenAleatoria;
 
-    // Extraer parámetros que envía Omada por URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const targetUrl = urlParams.get('target') || 'https://omadanetworks.com';
-    document.getElementById('omadaForm').action = targetUrl;
-
-    // PROGRAMACIÓN DEL TEMPORIZADOR DEL BOTÓN
-    const boton = document.getElementById('accionBtn');
-    boton.disabled = true;
-    boton.style.backgroundColor = "#e2e8f0";
-    boton.style.color = "#4a5568";
-    boton.style.cursor = "not-allowed";
-
-    let tiempo = 15;
-    const cuentaRegresiva = setInterval(function() {
-        tiempo--;
-        boton.value = "Espera... (" + tiempo + "s)";
+    // Retrasamos la lectura de parámetros para estabilizar el navegador nativo de Android
+    setTimeout(function() {
+        const urlParams = new URLSearchParams(window.location.search);
         
-        if (tiempo <= 0) {
-            clearInterval(cuentaRegresiva);
-            boton.disabled = false;
-            boton.style.backgroundColor = "#28a745";
-            boton.style.color = "white";
-            boton.style.cursor = "pointer";
-            boton.value = "Conectarse a Internet Gratis";
-            
-            boton.onclick = function() {
-                document.getElementById('submitReal').click();
-            };
+        // REGLA OMADA: El formulario debe ir a 'authUrl' (que es la IP del ER605), NO a 'target'
+        const authUrl = urlParams.get('authUrl'); 
+        const clientMac = urlParams.get('clientMac') || '';
+        const apMac = urlParams.get('apMac') || '';
+        
+        if (authUrl) {
+            document.getElementById('omadaForm').action = authUrl;
         }
-    }, 1000);
+        document.getElementById('clientMac').value = clientMac;
+        document.getElementById('apMac').value = apMac;
+
+        // INICIAR TEMPORIZADOR
+        const boton = document.getElementById('accionBtn');
+        let tiempo = 15;
+
+        const cuentaRegresiva = setInterval(function() {
+            tiempo--;
+            boton.value = "Espera... (" + tiempo + "s)";
+            
+            if (tiempo <= 0) {
+                clearInterval(cuentaRegresiva);
+                boton.disabled = false;
+                boton.style.backgroundColor = "#28a745";
+                boton.style.color = "white";
+                boton.style.cursor = "pointer";
+                boton.value = "Conectarse a Internet Gratis";
+                
+                // Al hacer clic, enviamos directamente el formulario contenedor
+                boton.onclick = function() {
+                    document.getElementById('omadaForm').submit();
+                };
+            }
+        }, 1000);
+
+    }, 600); // 600 milisegundos de respiro para Android
 </script>
 
 </body>
