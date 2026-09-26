@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wi-Fi Gratis All Gamex</title>
+    <title>Acceso Wi-Fi All Gamex</title>
     <style>
         * { box-sizing: border-box; }
         html, body { height: 100%; margin: 0; padding: 0; background-color: #f0f2f5; font-family: -apple-system, sans-serif; overflow: hidden; }
@@ -13,24 +13,7 @@
         p { font-size: 13px; color: #666; margin: 0 0 15px 0; text-align: center; }
         .ad-container { width: 100%; flex: 1; display: flex; justify-content: center; align-items: center; min-height: 0; margin-bottom: 15px; }
         .ad-img { max-width: 100%; max-height: 45vh; object-fit: contain; border-radius: 8px; }
-        
-        .timer-box { 
-            width: 100%;
-            padding: 14px; 
-            background-color: #e2e8f0; 
-            color: #4a5568; 
-            border-radius: 8px; 
-            font-size: 15px; 
-            font-weight: bold; 
-            text-align: center;
-            transition: 0.3s;
-        }
-        .reveal-code {
-            background-color: #28a745 !important;
-            color: white !important;
-            font-size: 18px !important;
-            letter-spacing: 2px;
-        }
+        .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; width: 100%; display: block; -webkit-appearance: none; }
     </style>
 </head>
 <body>
@@ -38,45 +21,49 @@
 <div class="wrapper">
     <div class="box">
         <h2>Wi-Fi Gratis All Gamex</h2>
-        <p>Tu clave se revelará al finalizar la cuenta regresiva.</p>
+        <p>Tu navegación se activará al finalizar la cuenta regresiva.</p>
         
         <div class="ad-container">
-            <!-- Espacio para tus imágenes (se inyectan por script abajo) -->
-            <img id="publicidad" class="ad-img" src="" alt="Anuncio All Gamex">
+            <!-- AQUÍ PEGARÁS TU IMAGEN CONVERTIDA EN TEXTO -->
+            <img id="publicidad" class="ad-img" src="PEGA_AQUI_EL_CODIGO_BASE64" alt="Anuncio All Gamex">
         </div>
 
-        <!-- Contenedor del reloj que luego mostrará tu código de Omada -->
-        <div id="contadorVisual" class="timer-box">
-            Espera... (15s)
-        </div>
+        <form id="omadaForm" method="post" style="width: 100%;">
+            <input type="button" id="accionBtn" class="btn" value="Espera... (15s)">
+            <input type="submit" id="submitReal" style="display: none;">
+        </form>
     </div>
 </div>
 
 <script>
-    // 1. TUS IMÁGENES DENTRO DE LA CARPETA ASSETS
-    const misImagenes = [
-        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
-        "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
-        "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
-    ];
+    // Recuperar datos de autenticación del router TP-Link Omada
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetUrl = urlParams.get('target') || 'https://omadanetworks.com';
+    document.getElementById('omadaForm').action = targetUrl;
 
-    // Carga aleatoria de imagen de All Gamex
-    const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
-    document.getElementById('publicidad').src = imagenAleatoria;
+    // RELOJ DE 15 SEGUNDOS IMPEDIBLE
+    const boton = document.getElementById('accionBtn');
+    boton.disabled = true;
+    boton.style.backgroundColor = "#e2e8f0";
+    boton.style.color = "#4a5568";
+    boton.style.cursor = "not-allowed";
 
-    // 2. CUENTA REGRESIVA DE 15 SEGUNDOS
-    const visualBox = document.getElementById('contadorVisual');
     let tiempo = 15;
-
-    const reloj = setInterval(function() {
+    const cuentaRegresiva = setInterval(function() {
         tiempo--;
-        visualBox.innerText = "Espera... (" + tiempo + "s)";
+        boton.value = "Espera... (" + tiempo + "s)";
         
         if (tiempo <= 0) {
-            clearInterval(reloj);
-            // Revelamos tu código oficial de Omada en verde brillante
-            visualBox.classList.add('reveal-code');
-            visualBox.innerHTML = "CLAVE WI-FI: <strong>vbKvvA</strong>";
+            clearInterval(cuentaRegresiva);
+            boton.disabled = false;
+            boton.style.backgroundColor = "#28a745";
+            boton.style.color = "white";
+            boton.style.cursor = "pointer";
+            boton.value = "Conectarse a Internet Gratis";
+            
+            boton.onclick = function() {
+                document.getElementById('submitReal').click();
+            };
         }
     }, 1000);
 </script>
