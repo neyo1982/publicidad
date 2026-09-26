@@ -1,85 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Acceso Wi-Fi All Gamex</title>
-    <style>
-        * { box-sizing: border-box; }
-        html, body { height: 100%; margin: 0; padding: 0; background-color: #f0f2f5; font-family: -apple-system, sans-serif; overflow: hidden; }
-        .wrapper { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; padding: 15px; }
-        .box { width: 100%; max-width: 380px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: flex; flex-direction: column; align-items: center; max-height: 95vh; }
-        h2 { font-size: 18px; color: #333; margin: 0 0 5px 0; text-align: center; }
-        p { font-size: 13px; color: #666; margin: 0 0 15px 0; text-align: center; }
-        .ad-container { width: 100%; flex: 1; display: flex; justify-content: center; align-items: center; min-height: 0; margin-bottom: 15px; }
-        .ad-img { max-width: 100%; max-height: 45vh; object-fit: contain; border-radius: 8px; background-color: #eaeaea; }
-        .btn { width: 100%; padding: 14px; background-color: #007aff; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; width: 100%; display: block; -webkit-appearance: none; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>Acceso Wi-Fi All Gamex</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #f0f2f5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow: hidden;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.box {
+    width: 100%;
+    max-width: 380px;
+    max-height: 95vh;
+
+    background: #fff;
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+}
+
+p {
+    margin: 0 0 15px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+}
+
+.ad-container {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 15px;
+
+    min-height: 200px;
+}
+
+.ad-img {
+    display: block;
+
+    width: auto;
+    max-width: 100%;
+    max-height: 45vh;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+}
+
+.btn {
+    width: 100%;
+
+    padding: 14px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background: #007aff;
+
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.btn:disabled {
+    background: #e2e8f0;
+    color: #4a5568;
+    cursor: not-allowed;
+}
+</style>
 </head>
+
 <body>
 
 <div class="wrapper">
+
     <div class="box">
+
         <h2>Wi-Fi Gratis All Gamex</h2>
-        <p>Tu navegación se activará al finalizar la cuenta regresiva.</p>
-        
+
+        <p>
+            Tu navegación se activará al finalizar
+            la cuenta regresiva.
+        </p>
+
         <div class="ad-container">
-            <!-- Usaremos un servidor de respaldo ultra-estable que carga en cualquier red -->
-            <img id="publicidad" class="ad-img" src="https://picsum.photos" alt="Anuncio All Gamex">
+
+            <img
+                id="publicidad"
+                class="ad-img"
+                src="https://neyo1982.github.io/publicidad/assets/agxpub.jpg"
+                alt="Publicidad All Gamex">
+
         </div>
 
-        <form id="omadaForm" method="post" style="width: 100%;">
-            <input type="button" id="accionBtn" class="btn" value="Espera... (15s)">
-            <input type="submit" id="submitReal" style="display: none;">
+        <form id="omadaForm" method="post">
+
+            <button
+                type="submit"
+                id="accionBtn"
+                class="btn"
+                disabled>
+
+                Espera... (15s)
+
+            </button>
+
         </form>
+
     </div>
+
 </div>
 
 <script>
-    // 1. CARGA SEGUIDA DE IMÁGENES NATIVAS DE TU PROPIO SITIO WEB
-    // Nota: Si no encuentra las tuyas por retardo de GitHub, usará el anuncio de prueba de arriba
-    const misImagenes = [
-        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
-        "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
-        "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
-    ];
 
-    const imagenAleatoria = misImagenes[Math.floor(Math.random() * misImagenes.length)];
-    
-    // Intentamos pintar tu foto de All Gamex de inmediato
-    const imgObj = document.getElementById('publicidad');
-    imgObj.src = imagenAleatoria;
+const imagenes = [
+    "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
+    "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
+    "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
+];
 
-    // 2. RECUPERAR DATOS DEL ROUTER TP-LINK OMADA
-    const urlParams = new URLSearchParams(window.location.search);
-    const targetUrl = urlParams.get('target') || 'https://omadanetworks.com';
-    document.getElementById('omadaForm').action = targetUrl;
+const img = document.getElementById("publicidad");
 
-    // 3. RELOJ DE 15 SEGUNDOS IMPEDIBLE
-    const boton = document.getElementById('accionBtn');
-    boton.disabled = true;
-    boton.style.backgroundColor = "#e2e8f0";
-    boton.style.color = "#4a5568";
-    boton.style.cursor = "not-allowed";
+const seleccion =
+    imagenes[Math.floor(Math.random() * imagenes.length)];
 
-    let tiempo = 15;
-    const cuentaRegresiva = setInterval(function() {
+img.src = seleccion;
+
+/*
+ * Si falla la imagen seleccionada,
+ * intenta una imagen conocida.
+ */
+img.onerror = function () {
+
+    this.onerror = null;
+
+    this.src =
+        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg";
+};
+
+
+/*
+ * Obtener parámetros enviados por Omada
+ */
+const params =
+    new URLSearchParams(window.location.search);
+
+const target =
+    params.get("target");
+
+if (target) {
+
+    document
+        .getElementById("omadaForm")
+        .action = target;
+
+}
+
+
+/*
+ * CUENTA REGRESIVA
+ */
+
+const boton =
+    document.getElementById("accionBtn");
+
+let tiempo = 15;
+
+const intervalo =
+    setInterval(function () {
+
         tiempo--;
-        boton.value = "Espera... (" + tiempo + "s)";
-        
+
+        boton.textContent =
+            "Espera... (" + tiempo + "s)";
+
         if (tiempo <= 0) {
-            clearInterval(cuentaRegresiva);
+
+            clearInterval(intervalo);
+
             boton.disabled = false;
-            boton.style.backgroundColor = "#28a745";
-            boton.style.color = "white";
-            boton.style.cursor = "pointer";
-            boton.value = "Conectarse a Internet Gratis";
-            
-            boton.onclick = function() {
-                document.getElementById('submitReal').click();
-            };
+
+            boton.textContent =
+                "Conectarse a Internet Gratis";
+
         }
+
     }, 1000);
+
 </script>
 
 </body>
