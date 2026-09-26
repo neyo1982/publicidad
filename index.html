@@ -1,121 +1,234 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+    <meta charset="UTF-8">
 
-<title>Acceso Wi-Fi All Gamex</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
-<style>
-* {
-    box-sizing: border-box;
-}
+    <meta name="theme-color" content="#007aff">
 
-html,
-body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background: #f0f2f5;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow: hidden;
-}
+    <title>Wi-Fi Gratis All Gamex</title>
 
-.wrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-.box {
-    width: 100%;
-    max-width: 380px;
-    max-height: 95vh;
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+        }
 
-    background: #fff;
+        .wrapper {
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
 
-    padding: 20px;
+        .box {
+            width: 100%;
+            max-width: 380px;
+            max-height: 95vh;
 
-    border-radius: 16px;
+            background: #ffffff;
 
-    box-shadow:
-        0 4px 15px rgba(0,0,0,.08);
+            padding: 22px;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+            border-radius: 16px;
 
-h2 {
-    margin: 0 0 5px;
-    font-size: 18px;
-    color: #333;
-    text-align: center;
-}
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.10);
 
-p {
-    margin: 0 0 15px;
-    font-size: 13px;
-    color: #666;
-    text-align: center;
-}
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.ad-container {
-    width: 100%;
+        h2 {
+            width: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+            margin: 0 0 6px 0;
 
-    margin-bottom: 15px;
+            font-size: 19px;
+            line-height: 1.25;
 
-    min-height: 200px;
-}
+            color: #222222;
 
-.ad-img {
-    display: block;
+            text-align: center;
+        }
 
-    width: auto;
-    max-width: 100%;
-    max-height: 45vh;
+        .mensaje {
+            width: 100%;
 
-    object-fit: contain;
+            margin: 0 0 15px 0;
 
-    border-radius: 8px;
-}
+            font-size: 13px;
+            line-height: 1.4;
 
-.btn {
-    width: 100%;
+            color: #666666;
 
-    padding: 14px;
+            text-align: center;
+        }
 
-    border: 0;
-    border-radius: 8px;
+        .ad-container {
+            width: 100%;
 
-    background: #007aff;
+            min-height: 180px;
+            max-height: 52vh;
 
-    color: #fff;
+            margin-bottom: 15px;
 
-    font-size: 16px;
-    font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-    cursor: pointer;
-}
+            overflow: hidden;
 
-.btn:disabled {
-    background: #e2e8f0;
-    color: #4a5568;
-    cursor: not-allowed;
-}
-</style>
+            border-radius: 10px;
+
+            background: #eeeeee;
+        }
+
+        .ad-img {
+            display: block;
+
+            width: 100%;
+            height: auto;
+
+            max-width: 100%;
+            max-height: 52vh;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+        }
+
+        .ad-error {
+            display: none;
+
+            padding: 20px;
+
+            font-size: 14px;
+            color: #777777;
+
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+
+            min-height: 50px;
+
+            padding: 14px 10px;
+
+            border: 0;
+            border-radius: 9px;
+
+            background: #dfe3e8;
+            color: #555555;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            text-align: center;
+
+            cursor: not-allowed;
+
+            -webkit-appearance: none;
+            appearance: none;
+
+            transition:
+                background-color 0.2s ease,
+                transform 0.1s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn.activo {
+            background: #28a745;
+            color: #ffffff;
+
+            cursor: pointer;
+        }
+
+        .contador {
+            width: 100%;
+
+            margin-top: 9px;
+
+            font-size: 11px;
+            color: #888888;
+
+            text-align: center;
+        }
+
+        .estado {
+            display: none;
+
+            width: 100%;
+
+            margin-top: 10px;
+
+            padding: 9px;
+
+            border-radius: 7px;
+
+            background: #f1f1f1;
+
+            font-size: 12px;
+            color: #555555;
+
+            text-align: center;
+        }
+
+        @media (max-height: 600px) {
+            .wrapper {
+                padding: 8px;
+            }
+
+            .box {
+                padding: 14px;
+            }
+
+            h2 {
+                font-size: 17px;
+            }
+
+            .mensaje {
+                margin-bottom: 8px;
+            }
+
+            .ad-container {
+                max-height: 42vh;
+                margin-bottom: 9px;
+            }
+
+            .ad-img {
+                max-height: 42vh;
+            }
+
+            .btn {
+                min-height: 45px;
+                padding: 11px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -126,9 +239,9 @@ p {
 
         <h2>Wi-Fi Gratis All Gamex</h2>
 
-        <p>
-            Tu navegación se activará al finalizar
-            la cuenta regresiva.
+        <p class="mensaje">
+            Disfruta de Internet gratis.
+            Observa el anuncio y espera la cuenta regresiva.
         </p>
 
         <div class="ad-container">
@@ -136,104 +249,574 @@ p {
             <img
                 id="publicidad"
                 class="ad-img"
-                src="https://neyo1982.github.io/publicidad/assets/agxpub.jpg"
-                alt="Publicidad All Gamex">
+                src=""
+                alt="Publicidad All Gamex"
+            >
+
+            <div id="adError" class="ad-error">
+                No se pudo cargar el anuncio.
+            </div>
 
         </div>
 
-        <form id="omadaForm" method="post">
+        <button
+            id="accionBtn"
+            class="btn"
+            type="button"
+            disabled
+        >
+            Espera... (15s)
+        </button>
 
-            <button
-                type="submit"
-                id="accionBtn"
-                class="btn"
-                disabled>
+        <div id="contador" class="contador">
+            Preparando anuncio...
+        </div>
 
-                Espera... (15s)
-
-            </button>
-
-        </form>
+        <div id="estado" class="estado"></div>
 
     </div>
 
 </div>
 
+
 <script>
 
-const imagenes = [
-    "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
-    "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
-    "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
-];
+    /*
+    ============================================================
+    CONFIGURACIÓN
+    ============================================================
 
-const img = document.getElementById("publicidad");
+    Por ahora NO ponemos aquí ninguna credencial de Omada.
 
-const seleccion =
-    imagenes[Math.floor(Math.random() * imagenes.length)];
+    En la segunda etapa agregaremos nuestro servidor:
 
-img.src = seleccion;
+        BACKEND_URL = "https://tu-servidor..."
 
-/*
- * Si falla la imagen seleccionada,
- * intenta una imagen conocida.
- */
-img.onerror = function () {
+    Ese servidor será el encargado de autorizar al cliente
+    en Omada.
 
-    this.onerror = null;
+    ============================================================
+    */
 
-    this.src =
-        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg";
-};
+    const BACKEND_URL = "";
 
 
-/*
- * Obtener parámetros enviados por Omada
- */
-const params =
-    new URLSearchParams(window.location.search);
+    /*
+    ============================================================
+    ANUNCIOS
+    ============================================================
 
-const target =
-    params.get("target");
+    Por ahora pongo las 3 imágenes que ya tienes.
 
-if (target) {
+    Cuando subas más imágenes puedes agregarlas aquí:
 
-    document
-        .getElementById("omadaForm")
-        .action = target;
+        agxpub4.jpg
+        agxpub5.jpg
+        agxpub6.jpg
+        ...
 
-}
+    IMPORTANTE:
+
+    Esta versión utiliza localStorage únicamente para la PRUEBA.
+
+    En la versión definitiva el contador será GLOBAL y estará
+    en el servidor, para que:
+
+        Cliente 1 -> anuncio 1
+        Cliente 2 -> anuncio 2
+        Cliente 3 -> anuncio 3
+
+    independientemente del teléfono o computadora.
+
+    ============================================================
+    */
+
+    const misImagenes = [
+
+        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
+
+        "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
+
+        "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
+
+    ];
 
 
-/*
- * CUENTA REGRESIVA
- */
+    /*
+    ============================================================
+    OBTENER PARÁMETROS DE OMADA
+    ============================================================
+    */
 
-const boton =
-    document.getElementById("accionBtn");
+    const parametros = new URLSearchParams(window.location.search);
 
-let tiempo = 15;
 
-const intervalo =
-    setInterval(function () {
+    const clientMac =
+        parametros.get("clientMac") || "";
 
-        tiempo--;
+    const clientIp =
+        parametros.get("clientIp") || "";
+
+    const gatewayMac =
+        parametros.get("gatewayMac") || "";
+
+    const vid =
+        parametros.get("vid") || "";
+
+    const tiempoOmada =
+        parametros.get("t") || "";
+
+    const site =
+        parametros.get("site") || "";
+
+    const redirectUrl =
+        parametros.get("redirectUrl") ||
+        "https://www.google.com";
+
+
+    /*
+    ============================================================
+    ELEMENTOS
+    ============================================================
+    */
+
+    const imagen =
+        document.getElementById("publicidad");
+
+    const adError =
+        document.getElementById("adError");
+
+    const boton =
+        document.getElementById("accionBtn");
+
+    const contador =
+        document.getElementById("contador");
+
+    const estado =
+        document.getElementById("estado");
+
+
+    /*
+    ============================================================
+    VALIDACIÓN / DIAGNÓSTICO
+    ============================================================
+
+    No mostramos la MAC ni otros datos en pantalla.
+
+    Solamente dejamos información en consola para las pruebas.
+
+    ============================================================
+    */
+
+    console.log("=== OMADA EXTERNAL PORTAL ===");
+
+    console.log("clientMac:", clientMac);
+    console.log("clientIp:", clientIp);
+    console.log("gatewayMac:", gatewayMac);
+    console.log("vid:", vid);
+    console.log("t:", tiempoOmada);
+    console.log("site:", site);
+    console.log("redirectUrl:", redirectUrl);
+
+
+    /*
+    ============================================================
+    SELECCIÓN DEL ANUNCIO
+
+    SOLO PARA ESTA PRIMERA PRUEBA.
+
+    Guarda el número del anuncio utilizado en el navegador.
+
+    NO es todavía el sistema global definitivo.
+
+    ============================================================
+    */
+
+    function obtenerNumeroAnuncio() {
+
+        let numero =
+            parseInt(
+                localStorage.getItem("allGamex_ad_index"),
+                10
+            );
+
+        if (
+            isNaN(numero) ||
+            numero < 0 ||
+            numero >= misImagenes.length
+        ) {
+            numero = 0;
+        }
+
+        return numero;
+    }
+
+
+    function avanzarNumeroAnuncio(numeroActual) {
+
+        const siguiente =
+            (numeroActual + 1) % misImagenes.length;
+
+        localStorage.setItem(
+            "allGamex_ad_index",
+            siguiente
+        );
+    }
+
+
+    /*
+    ============================================================
+    CARGAR ANUNCIO
+    ============================================================
+    */
+
+    const numeroAnuncio =
+        obtenerNumeroAnuncio();
+
+    const imagenSeleccionada =
+        misImagenes[numeroAnuncio];
+
+
+    imagen.onload = function () {
+
+        imagen.style.display = "block";
+        adError.style.display = "none";
+
+        contador.textContent =
+            "Publicidad " +
+            (numeroAnuncio + 1) +
+            " de " +
+            misImagenes.length;
+
+    };
+
+
+    imagen.onerror = function () {
+
+        imagen.style.display = "none";
+        adError.style.display = "block";
+
+        contador.textContent =
+            "No se pudo cargar la publicidad.";
+
+    };
+
+
+    imagen.src = imagenSeleccionada;
+
+
+    /*
+    ============================================================
+    CUENTA REGRESIVA
+
+    Utilizamos Date.now() en lugar de depender exclusivamente
+    de setInterval.
+
+    Esto es más robusto si el WebView de Android pausa
+    temporalmente JavaScript.
+
+    ============================================================
+    */
+
+    const DURACION_ANUNCIO =
+        15 * 1000;
+
+    const horaInicio =
+        Date.now();
+
+    const horaFin =
+        horaInicio + DURACION_ANUNCIO;
+
+
+    function actualizarContador() {
+
+        const ahora =
+            Date.now();
+
+        const restante =
+            Math.max(
+                0,
+                horaFin - ahora
+            );
+
+        const segundos =
+            Math.ceil(
+                restante / 1000
+            );
+
+
+        if (restante > 0) {
+
+            boton.disabled = true;
+
+            boton.classList.remove("activo");
+
+            boton.textContent =
+                "Espera... (" +
+                segundos +
+                "s)";
+
+            requestAnimationFrame(
+                actualizarContador
+            );
+
+            return;
+        }
+
+
+        /*
+        ========================================================
+        FINALIZÓ LA PUBLICIDAD
+        ========================================================
+        */
+
+        boton.disabled = false;
+
+        boton.classList.add("activo");
 
         boton.textContent =
-            "Espera... (" + tiempo + "s)";
+            "Conectarse a Internet Gratis";
 
-        if (tiempo <= 0) {
+        contador.textContent =
+            "Publicidad completada.";
 
-            clearInterval(intervalo);
+    }
+
+
+    actualizarContador();
+
+
+    /*
+    ============================================================
+    BOTÓN CONTINUAR
+    ============================================================
+    */
+
+    boton.addEventListener(
+        "click",
+        continuar
+    );
+
+
+    async function continuar() {
+
+        /*
+        Evitar doble clic
+        */
+
+        if (boton.disabled) {
+            return;
+        }
+
+
+        boton.disabled = true;
+
+        boton.classList.remove("activo");
+
+        boton.textContent =
+            "Conectando...";
+
+
+        /*
+        ========================================================
+        MODO PRUEBA
+
+        BACKEND_URL todavía está vacío.
+
+        En este modo NO podemos autorizar el cliente en Omada.
+
+        Simplemente avanzamos al siguiente anuncio y seguimos
+        a redirectUrl.
+
+        ========================================================
+        */
+
+        if (!BACKEND_URL) {
+
+            avanzarNumeroAnuncio(
+                numeroAnuncio
+            );
+
+
+            estado.style.display =
+                "block";
+
+            estado.textContent =
+                "Modo de prueba: el servidor de autorización todavía no está conectado.";
+
+
+            /*
+            Esperamos un momento para poder leer el mensaje
+            durante las pruebas.
+            */
+
+            setTimeout(
+                function () {
+
+                    window.location.href =
+                        redirectUrl;
+
+                },
+                1200
+            );
+
+            return;
+        }
+
+
+        /*
+        ========================================================
+        MODO REAL
+
+        Cuando tengamos el backend, aquí enviaremos:
+
+            clientMac
+            clientIp
+            gatewayMac
+            vid
+            t
+            site
+            redirectUrl
+
+        El backend:
+
+            1. valida la solicitud
+            2. autoriza el cliente en Omada
+            3. incrementa el contador global
+            4. devuelve la URL de destino
+
+        ========================================================
+        */
+
+
+        try {
+
+            const respuesta =
+                await fetch(
+                    BACKEND_URL + "/authorize",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            clientMac:
+                                clientMac,
+
+                            clientIp:
+                                clientIp,
+
+                            gatewayMac:
+                                gatewayMac,
+
+                            vid:
+                                vid,
+
+                            t:
+                                tiempoOmada,
+
+                            site:
+                                site,
+
+                            redirectUrl:
+                                redirectUrl
+
+                        })
+                    }
+                );
+
+
+            if (!respuesta.ok) {
+
+                throw new Error(
+                    "El servidor respondió HTTP " +
+                    respuesta.status
+                );
+
+            }
+
+
+            const resultado =
+                await respuesta.json();
+
+
+            if (!resultado.success) {
+
+                throw new Error(
+                    resultado.message ||
+                    "No se pudo autorizar el cliente."
+                );
+
+            }
+
+
+            /*
+            El backend confirmó la autorización.
+            */
+
+            estado.style.display =
+                "block";
+
+            estado.textContent =
+                "¡Conexión autorizada!";
+
+
+            avanzarNumeroAnuncio(
+                numeroAnuncio
+            );
+
+
+            /*
+            Si el backend devuelve una URL,
+            utilizamos esa. De lo contrario,
+            usamos la que entregó Omada.
+            */
+
+            const destino =
+                resultado.redirectUrl ||
+                redirectUrl;
+
+
+            setTimeout(
+                function () {
+
+                    window.location.href =
+                        destino;
+
+                },
+                300
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Error de autorización:",
+                error
+            );
+
+
+            estado.style.display =
+                "block";
+
+            estado.textContent =
+                "No fue posible conectar. Intenta nuevamente.";
+
 
             boton.disabled = false;
 
+            boton.classList.add("activo");
+
             boton.textContent =
-                "Conectarse a Internet Gratis";
+                "Intentar nuevamente";
 
         }
 
-    }, 1000);
+    }
 
 </script>
 
