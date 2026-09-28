@@ -39,24 +39,57 @@
             padding: 15px;
         }
 
-        .box {
-            width: 100%;
-            max-width: 380px;
-            max-height: 95vh;
+       .box {
+    width: 100%;
+    max-width: 430px;
+    max-height: 95vh;
 
-            background: #ffffff;
+    background: #ffffff;
 
-            padding: 22px;
+    padding: 14px;
 
-            border-radius: 16px;
+    border-radius: 16px;
 
-            box-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.10);
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.10);
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ad-container {
+    width: 100%;
+
+    min-height: 180px;
+    max-height: 62vh;
+
+    margin-bottom: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #eeeeee;
+}
+
+.ad-img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 62vh;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+}
 
         h2 {
             width: 100%;
@@ -197,37 +230,38 @@
             text-align: center;
         }
 
-        @media (max-height: 600px) {
-            .wrapper {
-                padding: 8px;
-            }
+       @media (max-height: 600px) {
 
-            .box {
-                padding: 14px;
-            }
+    .wrapper {
+        padding: 8px;
+    }
 
-            h2 {
-                font-size: 17px;
-            }
+    .box {
+        padding: 10px;
+    }
 
-            .mensaje {
-                margin-bottom: 8px;
-            }
+    h2 {
+        font-size: 17px;
+    }
 
-            .ad-container {
-                max-height: 42vh;
-                margin-bottom: 9px;
-            }
+    .mensaje {
+        margin-bottom: 8px;
+    }
 
-            .ad-img {
-                max-height: 42vh;
-            }
+    .ad-container {
+        max-height: 50vh;
+        margin-bottom: 9px;
+    }
 
-            .btn {
-                min-height: 45px;
-                padding: 11px;
-            }
-        }
+    .ad-img {
+        max-height: 50vh;
+    }
+
+    .btn {
+        min-height: 45px;
+        padding: 11px;
+    }
+}
     </style>
 </head>
 
