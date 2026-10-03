@@ -372,6 +372,12 @@
         parametros.get("gatewayMac") ||
         parametros.get("apMac") ||
         "";
+    const ssidName =
+        parametros.get("ssidName") || "";
+
+    const radioId =
+        parametros.get("radioId") || "";
+
 
     const vid =
         parametros.get("vid") || "";
@@ -736,7 +742,11 @@
                                 site,
 
                             redirectUrl:
-                                redirectUrl
+                                redirectUrl,
+
+                            ssidName: ssidName,
+                           
+                            radioId: radioId
 
                         })
                     }
