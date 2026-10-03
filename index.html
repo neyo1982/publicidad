@@ -361,6 +361,8 @@
 
     const parametros = new URLSearchParams(window.location.search);
 
+    const apMac =
+    parametros.get("apMac") || "";
 
     const clientMac =
         parametros.get("clientMac") || "";
