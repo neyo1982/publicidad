@@ -322,18 +322,54 @@
     Esta página muestra una sola imagen por visita.
     */
 
-    const negocios = [
-        {
-            id: "allgamex",
-            nombre: "AllGameX",
-            nivel: "normal",
-            imagenes: [
-                "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
-                "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
-                "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
-                // Agrega aquí agxpub4.jpg y agxpub5.jpg cuando existan.
-            ]
-        }
+    const BASE_ASSETS =
+    "https://neyo1982.github.io/publicidad/assets";
+
+function imagenesNegocio(carpeta, prefijo, cantidad, extension = "jpg") {
+    return Array.from({ length: cantidad }, (_, indice) => {
+        const numero =
+            indice === 0 ? "" : indice + 1;
+
+        return `${BASE_ASSETS}/${carpeta}/${prefijo}${numero}.${extension}`;
+    });
+}
+
+const negocios = [
+
+    {
+        id: "allgamex",
+        nombre: "AllGameX",
+        nivel: "normal",
+        imagenes: imagenesNegocio(
+            "allgamex",
+            "agxpub",
+            3 //numero de imagenes en carpeta
+        )
+    },
+
+    {
+        id: "negocioa",
+        nombre: "Negocio A",
+        nivel: "alta",
+        imagenes: imagenesNegocio(
+            "negocioa",
+            "negocioa",
+            4 //numero de imagenes en carpeta
+        )
+    },
+
+    {
+        id: "negociob",
+        nombre: "Negocio B",
+        nivel: "baja",
+        imagenes: imagenesNegocio(
+            "negociob",
+            "negociob",
+            5 //numero de imagenes en carpeta
+        )
+    }
+
+];
 
         // Agrega más negocios con nivel "alta", "normal" o "baja".
     ];
