@@ -314,46 +314,30 @@
 
     /*
     ============================================================
-    ANUNCIOS
+    CAMPAÑAS PUBLICITARIAS
     ============================================================
 
-    Por ahora pongo las 3 imágenes que ya tienes.
-
-    Cuando subas más imágenes puedes agregarlas aquí:
-
-        agxpub4.jpg
-        agxpub5.jpg
-        agxpub6.jpg
-        ...
-
-    IMPORTANTE:
-
-    Esta versión utiliza localStorage únicamente para la PRUEBA.
-
-    En la versión definitiva el contador será GLOBAL y estará
-    en el servidor, para que:
-
-        Cliente 1 -> anuncio 1
-        Cliente 2 -> anuncio 2
-        Cliente 3 -> anuncio 3
-
-    independientemente del teléfono o computadora.
-
-    ============================================================
+    Cada negocio puede tener distinta cantidad de imágenes.
+    La selección del turno la entrega el Worker mediante /next-ad.
+    Esta página muestra una sola imagen por visita.
     */
 
-    const misImagenes = [
+    const negocios = [
+        {
+            id: "allgamex",
+            nombre: "AllGameX",
+            nivel: "normal",
+            imagenes: [
+                "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
+                "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
+                "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
+                // Agrega aquí agxpub4.jpg y agxpub5.jpg cuando existan.
+            ]
+        }
 
-        "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
-
-        "https://neyo1982.github.io/publicidad/assets/agxpub2.jpg",
-
-        "https://neyo1982.github.io/publicidad/assets/agxpub3.jpg"
-
+        // Agrega más negocios con nivel "alta", "normal" o "baja".
     ];
-
-
-    /*
+/*
     ============================================================
     OBTENER PARÁMETROS DE OMADA
     ============================================================
@@ -442,91 +426,100 @@
 
     /*
     ============================================================
-    SELECCIÓN DEL ANUNCIO
-
-    SOLO PARA ESTA PRIMERA PRUEBA.
-
-    Guarda el número del anuncio utilizado en el navegador.
-
-    NO es todavía el sistema global definitivo.
-
+    SELECCIÓN DE PUBLICIDAD
     ============================================================
+
+    El Worker entrega un turno global. La proporción es:
+    alta 4, normal 2, baja 1.
+
+    Cada visita recibe una sola imagen; no existe carrusel.
     */
 
-    function obtenerNumeroAnuncio() {
+    const patronBase = [
+        "alta", "normal", "alta", "baja", "alta", "normal", "alta"
+    ];
 
-        let numero =
-            parseInt(
-                localStorage.getItem("allGamex_ad_index"),
-                10
+    const grupos = {
+        alta: negocios.filter(n => n.nivel === "alta"),
+        normal: negocios.filter(n => n.nivel === "normal"),
+        baja: negocios.filter(n => n.nivel === "baja")
+    };
+
+    // Si todavía no hay negocios de algún nivel, se omiten sus turnos.
+    const patron = patronBase.filter(nivel => grupos[nivel].length > 0);
+
+    function mostrarImagen(url, nombre) {
+        imagen.onload = function () {
+            imagen.style.display = "block";
+            adError.style.display = "none";
+            contador.textContent = "Publicidad de " + nombre;
+        };
+
+        imagen.onerror = function () {
+            imagen.style.display = "none";
+            adError.style.display = "block";
+            contador.textContent = "No se pudo cargar la publicidad.";
+        };
+
+        imagen.src = url;
+    }
+
+    async function cargarPublicidad() {
+        try {
+            if (patron.length === 0) {
+                throw new Error("No hay campañas publicitarias configuradas.");
+            }
+
+            const respuesta = await fetch(BACKEND_URL + "/next-ad");
+            if (!respuesta.ok) throw new Error("No se obtuvo el turno publicitario.");
+
+            const datos = await respuesta.json();
+            const turno = Number(datos.slot);
+            if (!Number.isInteger(turno) || turno < 0) {
+                throw new Error("Turno publicitario inválido.");
+            }
+
+            const posicion = turno % patron.length;
+            const ciclo = Math.floor(turno / patron.length);
+            const nivel = patron[posicion];
+            const lista = grupos[nivel];
+            const repeticionesNivel = patron.filter(x => x === nivel).length;
+
+            const ocurrenciasAntes =
+                ciclo * repeticionesNivel +
+                patron.slice(0, posicion).filter(x => x === nivel).length;
+
+            const negocioIndex = ocurrenciasAntes % lista.length;
+            const impresionesNegocio = Math.floor(ocurrenciasAntes / lista.length);
+            const negocio = lista[negocioIndex];
+            const imagenIndex = impresionesNegocio % negocio.imagenes.length;
+
+            mostrarImagen(
+                negocio.imagenes[imagenIndex],
+                negocio.nombre
             );
 
-        if (
-            isNaN(numero) ||
-            numero < 0 ||
-            numero >= misImagenes.length
-        ) {
-            numero = 0;
+            console.log("Publicidad asignada:", {
+                turno,
+                nivel,
+                negocio: negocio.id,
+                imagen: imagenIndex + 1
+            });
+
+        } catch (error) {
+            console.error("Error al cargar publicidad:", error);
+
+            // Respaldo para que el portal siga funcionando si el endpoint está temporalmente inactivo.
+            mostrarImagen(
+                "https://neyo1982.github.io/publicidad/assets/agxpub.jpg",
+                "AllGameX"
+            );
         }
-
-        return numero;
     }
 
+    cargarPublicidad();
 
-    function avanzarNumeroAnuncio(numeroActual) {
-
-        const siguiente =
-            (numeroActual + 1) % misImagenes.length;
-
-        localStorage.setItem(
-            "allGamex_ad_index",
-            siguiente
-        );
-    }
-
-
-    /*
-    ============================================================
-    CARGAR ANUNCIO
-    ============================================================
-    */
-
-    const numeroAnuncio =
-        obtenerNumeroAnuncio();
-
-    const imagenSeleccionada =
-        misImagenes[numeroAnuncio];
-
-
-    imagen.onload = function () {
-
-        imagen.style.display = "block";
-        adError.style.display = "none";
-
-        contador.textContent =
-            "Publicidad " +
-            (numeroAnuncio + 1) +
-            " de " +
-            misImagenes.length;
-
-    };
-
-
-    imagen.onerror = function () {
-
-        imagen.style.display = "none";
-        adError.style.display = "block";
-
-        contador.textContent =
-            "No se pudo cargar la publicidad.";
-
-    };
-
-
-    imagen.src = imagenSeleccionada;
-
-
-    /*
+/*
     ============================================================
     CUENTA REGRESIVA
 
@@ -654,10 +647,6 @@
 
         if (!BACKEND_URL) {
 
-            avanzarNumeroAnuncio(
-                numeroAnuncio
-            );
-
 
             estado.style.display =
                 "block";
@@ -771,11 +760,6 @@
 
             estado.textContent =
                 "¡Conexión autorizada!";
-
-
-            avanzarNumeroAnuncio(
-                numeroAnuncio
-            );
 
 
             /*
