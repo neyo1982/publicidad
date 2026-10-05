@@ -468,7 +468,30 @@ const negocios = [
 
     Cada visita recibe una sola imagen; no existe carrusel.
     */
+    async function cargarPublicidad() {
 
+    const respaldo =
+        "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg";
+
+    // Mostrar una imagen aunque el contador tarde o falle
+    mostrarImagen(respaldo, "AllGameX");
+
+    try {
+        if (patron.length === 0) {
+            throw new Error("No hay campañas configuradas.");
+        }
+
+        const respuesta =
+            await fetch(BACKEND_URL + "/next-ad");
+
+        if (!respuesta.ok) {
+            throw new Error("No se obtuvo el turno.");
+        }
+
+        const datos =
+            await respuesta.json();
+
+        // Continúa aquí el código actual de selección
     const patronBase = [
         "alta", "normal", "alta", "baja", "alta", "normal", "alta"
     ];
