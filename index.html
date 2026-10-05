@@ -468,28 +468,7 @@ const negocios = [
 
     Cada visita recibe una sola imagen; no existe carrusel.
     */
-    async function cargarPublicidad() {
 
-    const respaldo =
-        "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg";
-
-    // Mostrar una imagen aunque el contador tarde o falle
-    mostrarImagen(respaldo, "AllGameX");
-
-    try {
-        if (patron.length === 0) {
-            throw new Error("No hay campañas configuradas.");
-        }
-
-        const respuesta =
-            await fetch(BACKEND_URL + "/next-ad");
-
-        if (!respuesta.ok) {
-            throw new Error("No se obtuvo el turno.");
-        }
-
-        const datos =
-            await respuesta.json();
 
         // Continúa aquí el código actual de selección
     const patronBase = [
@@ -521,58 +500,98 @@ const negocios = [
         imagen.src = url;
     }
 
-    async function cargarPublicidad() {
-        try {
-            if (patron.length === 0) {
-                throw new Error("No hay campañas publicitarias configuradas.");
-            }
+async function cargarPublicidad() {
 
-            const respuesta = await fetch(BACKEND_URL + "/next-ad");
-            if (!respuesta.ok) throw new Error("No se obtuvo el turno publicitario.");
+    const respaldo =
+        "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg";
 
-            const datos = await respuesta.json();
-            const turno = Number(datos.slot);
-            if (!Number.isInteger(turno) || turno < 0) {
-                throw new Error("Turno publicitario inválido.");
-            }
+    // Imagen inicial mientras se consulta el contador
+    mostrarImagen(respaldo, "AllGameX");
 
-            const posicion = turno % patron.length;
-            const ciclo = Math.floor(turno / patron.length);
-            const nivel = patron[posicion];
-            const lista = grupos[nivel];
-            const repeticionesNivel = patron.filter(x => x === nivel).length;
+    try {
 
-            const ocurrenciasAntes =
-                ciclo * repeticionesNivel +
-                patron.slice(0, posicion).filter(x => x === nivel).length;
-
-            const negocioIndex = ocurrenciasAntes % lista.length;
-            const impresionesNegocio = Math.floor(ocurrenciasAntes / lista.length);
-            const negocio = lista[negocioIndex];
-            const imagenIndex = impresionesNegocio % negocio.imagenes.length;
-
-            mostrarImagen(
-                negocio.imagenes[imagenIndex],
-                negocio.nombre
-            );
-
-            console.log("Publicidad asignada:", {
-                turno,
-                nivel,
-                negocio: negocio.id,
-                imagen: imagenIndex + 1
-            });
-
-        } catch (error) {
-            console.error("Error al cargar publicidad:", error);
-
-            // Respaldo para que el portal siga funcionando si el endpoint está temporalmente inactivo.
-            mostrarImagen(
-                "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg",
-                "AllGameX"
-            );
+        if (patron.length === 0) {
+            throw new Error("No hay campañas publicitarias configuradas.");
         }
+
+        const respuesta =
+            await fetch(BACKEND_URL + "/next-ad");
+
+        if (!respuesta.ok) {
+            throw new Error("No se obtuvo el turno publicitario.");
+        }
+
+        const datos =
+            await respuesta.json();
+
+        const turno =
+            Number(datos.slot);
+
+        if (!Number.isInteger(turno) || turno < 0) {
+            throw new Error("Turno publicitario inválido.");
+        }
+
+        const posicion =
+            turno % patron.length;
+
+        const ciclo =
+            Math.floor(turno / patron.length);
+
+        const nivel =
+            patron[posicion];
+
+        const lista =
+            grupos[nivel];
+
+        const repeticionesNivel =
+            patron.filter(x => x === nivel).length;
+
+        const ocurrenciasAntes =
+            ciclo * repeticionesNivel +
+            patron
+                .slice(0, posicion)
+                .filter(x => x === nivel)
+                .length;
+
+        const negocioIndex =
+            ocurrenciasAntes % lista.length;
+
+        const impresionesNegocio =
+            Math.floor(ocurrenciasAntes / lista.length);
+
+        const negocio =
+            lista[negocioIndex];
+
+        const imagenIndex =
+            impresionesNegocio % negocio.imagenes.length;
+
+        mostrarImagen(
+            negocio.imagenes[imagenIndex],
+            negocio.nombre
+        );
+
+        console.log("Publicidad asignada:", {
+            turno,
+            nivel,
+            negocio: negocio.id,
+            imagen: imagenIndex + 1
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error al cargar publicidad:",
+            error
+        );
+
+        mostrarImagen(
+            respaldo,
+            "AllGameX"
+        );
     }
+}
+
+cargarPublicidad();
 
     cargarPublicidad();
 
