@@ -260,7 +260,7 @@
             <img
                 id="publicidad"
                 class="ad-img"
-                src=""
+                src="https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg""
                 alt="Publicidad wifree"
             >
 
@@ -333,41 +333,31 @@ function imagenesNegocio(carpeta, prefijo, cantidad, extension = "jpg") {
     });
 }
 
+const imagenesAllGameX = [
+    "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg",
+    "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub2.jpg",
+    "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub3.jpg"
+];
+
 const negocios = [
-
     {
-        id: "allgamex",
+        id: "allgamex-normal",
         nombre: "AllGameX",
-        nivel: "normal", //exposicion normal, alta, baja
-        imagenes: imagenesNegocio(
-            "allgamex",
-            "agxpub",
-            3 //numero de imagenes en carpeta
-        )
+        nivel: "normal",
+        imagenes: imagenesAllGameX
     },
-
     {
-        id: "allgamexalta",
+        id: "allgamex-alta",
         nombre: "AllGameX",
-        nivel: "alta", //exposicion normal, alta, baja
-        imagenes: imagenesNegocio(
-            "allgamex",
-            "agxpub",
-            3 //numero de imagenes en carpeta
-        )
+        nivel: "alta",
+        imagenes: imagenesAllGameX
     },
-
     {
-         id: "allgamexbaja",
+        id: "allgamex-baja",
         nombre: "AllGameX",
-        nivel: "baja", //exposicion normal, alta, baja
-        imagenes: imagenesNegocio(
-            "allgamex",
-            "agxpub",
-            3 //numero de imagenes en carpeta
-        )
+        nivel: "baja",
+        imagenes: imagenesAllGameX
     }
-
 ];
 
         // Agrega más negocios con nivel "alta", "normal" o "baja".
