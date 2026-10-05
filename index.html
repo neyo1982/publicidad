@@ -491,94 +491,10 @@ const negocios = [
     }
 
 async function cargarPublicidad() {
-
-    const respaldo =
-        "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg";
-
-    // Imagen inicial mientras se consulta el contador
-    mostrarImagen(respaldo, "AllGameX");
-
-    try {
-
-        if (patron.length === 0) {
-            throw new Error("No hay campañas publicitarias configuradas.");
-        }
-
-        const respuesta =
-            await fetch(BACKEND_URL + "/next-ad");
-
-        if (!respuesta.ok) {
-            throw new Error("No se obtuvo el turno publicitario.");
-        }
-
-        const datos =
-            await respuesta.json();
-
-        const turno =
-            Number(datos.slot);
-
-        if (!Number.isInteger(turno) || turno < 0) {
-            throw new Error("Turno publicitario inválido.");
-        }
-
-        const posicion =
-            turno % patron.length;
-
-        const ciclo =
-            Math.floor(turno / patron.length);
-
-        const nivel =
-            patron[posicion];
-
-        const lista =
-            grupos[nivel];
-
-        const repeticionesNivel =
-            patron.filter(x => x === nivel).length;
-
-        const ocurrenciasAntes =
-            ciclo * repeticionesNivel +
-            patron
-                .slice(0, posicion)
-                .filter(x => x === nivel)
-                .length;
-
-        const negocioIndex =
-            ocurrenciasAntes % lista.length;
-
-        const impresionesNegocio =
-            Math.floor(ocurrenciasAntes / lista.length);
-
-        const negocio =
-            lista[negocioIndex];
-
-        const imagenIndex =
-            impresionesNegocio % negocio.imagenes.length;
-
-        mostrarImagen(
-            negocio.imagenes[imagenIndex],
-            negocio.nombre
-        );
-
-        console.log("Publicidad asignada:", {
-            turno,
-            nivel,
-            negocio: negocio.id,
-            imagen: imagenIndex + 1
-        });
-
-    } catch (error) {
-
-        console.error(
-            "Error al cargar publicidad:",
-            error
-        );
-
-        mostrarImagen(
-            respaldo,
-            "AllGameX"
-        );
-    }
+    mostrarImagen(
+        "https://neyo1982.github.io/publicidad/assets/allgamex/agxpub1.jpg?v=4",
+        "AllGameX"
+    );
 }
 
 cargarPublicidad();
