@@ -803,19 +803,14 @@ const negocios = [
             */
 
             const destino =
-                resultado.redirectUrl ||
-                redirectUrl;
-
+            "https://example.com/";
 
             setTimeout(
-                function () {
-
-                    window.location.href =
-                        destino;
-
-                },
-                300
-            );
+               function () {
+                  window.location.replace(destino);
+               },
+               300
+             );
 
 
         } catch (error) {
